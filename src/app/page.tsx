@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { articles } from "@/data/articles";
+import { getArticles } from "@/lib/articles";
 import { SNS_LINKS } from "@/config/sns";
 
-export default function Home() {
+export default async function Home() {
+  const articles = await getArticles();
   const featuredArticles = articles.slice(0, 3);
 
   return (

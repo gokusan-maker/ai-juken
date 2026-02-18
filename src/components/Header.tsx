@@ -1,9 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { SNS_LINKS } from "@/config/sns";
 
 export function Header() {
+  const { data: session, status } = useSession();
+
   return (
     <header className="sticky top-0 z-50 bg-[var(--background)]/95 backdrop-blur border-b border-gray-200/80">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
@@ -17,6 +21,28 @@ export function Header() {
           >
             記事一覧
           </Link>
+          {status === "loading" ? (
+            <span className="text-sm text-gray-400">...</span>
+          ) : session ? (
+            <div className="flex items-center gap-4">
+              <span className="text-sm text-gray-600 truncate max-w-[120px]">
+                {session.user?.name || session.user?.email}
+              </span>
+              <button
+                onClick={() => signOut()}
+                className="text-sm font-medium text-gray-600 hover:text-[var(--accent)] transition-colors"
+              >
+                ログアウト
+              </button>
+            </div>
+          ) : (
+            <Link
+              href="/login"
+              className="text-sm font-medium text-gray-700 hover:text-[var(--accent)] transition-colors"
+            >
+              ログイン
+            </Link>
+          )}
           <a
             href={SNS_LINKS.twitter}
             target="_blank"

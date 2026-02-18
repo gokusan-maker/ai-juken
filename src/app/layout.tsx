@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { Providers } from "@/components/Providers";
 
 export const metadata: Metadata = {
   title: "AI×大学受験 | プロンプトエンジニアリングで合格を勝ち取る",
@@ -24,9 +25,11 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className="antialiased min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <Providers>
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

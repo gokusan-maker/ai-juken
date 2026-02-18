@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { articles } from "@/data/articles";
+import { getArticleById } from "@/lib/articles";
 import { SnsShare } from "@/components/SnsShare";
 
 export async function generateMetadata({
@@ -9,7 +9,7 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const article = articles.find((a) => a.id === id);
+  const article = await getArticleById(id);
   if (!article) return { title: "記事が見つかりません" };
 
   return {
@@ -34,7 +34,7 @@ export default async function ArticlePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const article = articles.find((a) => a.id === id);
+  const article = await getArticleById(id);
 
   if (!article) notFound();
 

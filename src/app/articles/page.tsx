@@ -1,12 +1,13 @@
 import Link from "next/link";
-import { articles } from "@/data/articles";
+import { getArticles } from "@/lib/articles";
 
 export const metadata = {
   title: "記事一覧 | AI×大学受験",
   description: "プロンプトエンジニアリングでAIを勉強に活かす記事一覧。英語・数学・国語など科目別、レベル別の実践的な内容。",
 };
 
-export default function ArticlesPage() {
+export default async function ArticlesPage() {
+  const articles = await getArticles();
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
       <div className="mb-10">
